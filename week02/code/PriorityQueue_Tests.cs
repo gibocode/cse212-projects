@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 [TestClass]
@@ -81,5 +82,22 @@ public class PriorityQueueTests
         {
             Assert.AreEqual("The queue is empty.", e.Message);
         }
+    }
+
+    [TestMethod]
+    public void TestPriorityQueue_DequeueHighestPriorityAtBack()
+    {
+        var priorityQueue = new PriorityQueue();
+
+        priorityQueue.Enqueue("Z", 3);
+        priorityQueue.Enqueue("F", 1);
+        priorityQueue.Enqueue("A", 4);
+        priorityQueue.Enqueue("Q", 2);
+        priorityQueue.Enqueue("M", 0);
+        priorityQueue.Enqueue("B", 6);
+
+        priorityQueue.Dequeue();
+
+        Assert.AreEqual("[Z (Pri:3), F (Pri:1), A (Pri:4), Q (Pri:2), M (Pri:0)]", priorityQueue.ToString());
     }
 }

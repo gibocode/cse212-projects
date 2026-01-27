@@ -64,7 +64,19 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+
+            // Get the degree from the 4th column (index 3)
+            var degree = fields[3];
+
+            // Update the count in the dictionary if degree already exists
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -88,7 +100,54 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
+        // Remove spaces and convert to lowercase
+        var newWord1 = word1.Replace(" ", "").Trim().ToLower();
+        var newWord2 = word2.Replace(" ", "").Trim().ToLower();
+
+        // If lengths are equal, check for anagram
+        if (newWord1.Length == newWord2.Length)
+        {
+            var charCount = new Dictionary<char, int>();
+
+            for (int i = 0; i < newWord1.Length; i++)
+            {
+                var char1 = newWord1[i];
+
+                // Count occurrences of each character in word1
+                if (charCount.ContainsKey(char1))
+                {
+                    charCount[char1]++;
+                }
+                else
+                {
+                    charCount[char1] = 1;
+                }
+            }
+
+            for (int i = 0; i < newWord2.Length; i++)
+            {
+                var char2 = newWord2[i];
+
+                // Decrease the count for each character found in word2
+                if (charCount.ContainsKey(char2))
+                {
+                    charCount[char2]--;
+
+                    if (charCount[char2] < 0)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            // If all counts are zero, they are anagrams
+            return true;
+        }
+
         return false;
     }
 

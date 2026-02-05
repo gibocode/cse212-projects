@@ -181,8 +181,10 @@ public static class Recursion
             currPath = new List<ValueTuple<int, int>>();
         }
 
+        // Check if can proceed to this path
         if (maze.IsValidMove(currPath, x, y))
         {
+            // Add new path if valid
             currPath.Add((x, y));
 
             // Base case
@@ -193,8 +195,14 @@ public static class Recursion
             else
             {
                 // Smaller problem
-                SolveMaze(results, maze, x, y + 1, currPath);
+                SolveMaze(results, maze, x, y + 1, currPath); // Move down
+                SolveMaze(results, maze, x, y - 1, currPath); // Move up
+                SolveMaze(results, maze, x + 1, y, currPath); // Move right
+                SolveMaze(results, maze, x - 1, y, currPath); // Move left
             }
+
+            // Remove valid but not included path
+            currPath.Remove((x, y));
         }
     }
 }
